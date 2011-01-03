@@ -115,3 +115,26 @@ string os::path::abspath(const string& path) {
   }
   return os::path::normpath(newpath);
 }
+
+void os::path::split(const string& path, string* head, string* tail) {
+  size_t i = path.rfind('/');
+  if (i == string::npos) {
+    head->clear();
+    *tail = path;
+  } else {
+    *head = os::path::normpath(path.substr(0, i + 1));
+    *tail = os::path::normpath(path.substr(i + 1, path.size() - i - 1));
+  }
+}
+
+string os::path::basename(const string& path) {
+  string head, tail;
+  os::path::split(path, &head, &tail);
+  return tail;
+}
+
+string os::path::dirname(const string& path) {
+  string head, tail;
+  os::path::split(path, &head, &tail);
+  return head;
+}

@@ -26,6 +26,12 @@ namespace os {
     string join(const string& a, const string& b);
     
     string normpath(const string& path);
+
+    void split(const string& path, string* head, string* tail);
+
+    string basename(const string& path);
+
+    string dirname(const string& path);
   }
 }
 

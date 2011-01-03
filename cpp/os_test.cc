@@ -67,3 +67,34 @@ TEST_F(OsPathTest, AbsPath) {
   EXPECT_EQ("/tmp/~/a", os::path::abspath("~/a"));
   EXPECT_EQ("/home", os::path::abspath("/home"));
 }
+
+TEST_F(OsPathTest, Split) {
+  string head, tail;
+  os::path::split("a", &head, &tail);
+  EXPECT_EQ("", head);
+  EXPECT_EQ("a", tail);
+
+  os::path::split("a/b.txt", &head, &tail);
+  EXPECT_EQ("a", head);
+  EXPECT_EQ("b.txt", tail);
+
+  os::path::split("/home", &head, &tail);
+  EXPECT_EQ("/", head);
+  EXPECT_EQ("home", tail);
+}
+
+TEST_F(OsPathTest, SplitOutputsAreCleared) {
+  string head = "foo";
+  string tail = "bar";
+  os::path::split("", &head, &tail);
+  EXPECT_EQ("", head);
+  EXPECT_EQ("", tail);
+}
+
+TEST_F(OsPathTest, Basename) {
+  EXPECT_EQ("bar", os::path::basename("foo/bar"));
+}
+
+TEST_F(OsPathTest, Dirname) {
+  EXPECT_EQ("foo", os::path::dirname("foo/bar"));
+}
