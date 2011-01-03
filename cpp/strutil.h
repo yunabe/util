@@ -1,3 +1,6 @@
+#ifndef YUNABE_UTIL_CPP_STRUTIL_H_
+#define YUNABE_UTIL_CPP_STRUTIL_H_
+
 #include <string>
 #include <vector>
 
@@ -38,3 +41,5 @@ static string JoinString(const string& combinator, const vector<string>& list) {
   return result;
 }
 }
+
+#endif  // YUNABE_UTIL_CPP_STRUTIL_H_
