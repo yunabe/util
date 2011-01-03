@@ -1,14 +1,43 @@
 #include "os.h"
 
+#include <dirent.h>  // opendir
 #include <limits.h>  // PATH_MAX
 #include <unistd.h>  // getcwd
+#include <string.h>  // strcmp
+#include <sys/types.h>  // opendir
 
 #include "strutil.h"
+
+static const char* kCurrentDirectory = ".";
+
+static const char* kParentDirectory = "..";
 
 string os::getcwd() {
   char cwd[PATH_MAX];
   ::getcwd(cwd, PATH_MAX);
   return string(cwd);
+}
+
+int os::rmdir(const string& path) {
+  return ::rmdir(path.c_str());
+}
+
+bool os::listdir(const string& path, vector<string>* children) {
+  DIR* d = opendir(path.c_str());
+  if (d == NULL) {
+    return false;
+  }
+  struct dirent* child;
+  while (child = readdir(d)) {
+    // Ignores . and ..
+    if (strcmp(kCurrentDirectory, child->d_name) == 0 ||
+        strcmp(kParentDirectory, child->d_name) == 0) {
+      continue;
+    }
+    children->push_back(string(child->d_name));
+  }
+  closedir(d);
+  return true;
 }
 
 bool os::path::isabs(const string& path) {

@@ -12,6 +12,10 @@ using std::vector;
 namespace os {
   string getcwd();
 
+  int rmdir(const string& path);
+
+  bool listdir(const string& path, vector<string>* children);
+
   namespace path {
     string abspath(const string& path);
     
