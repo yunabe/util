@@ -71,3 +71,32 @@ TEST_F(FormatTest, Format) {
   EXPECT_EQ("Hello world",
             strutil::Format("Hello %s", "world"));
 }
+
+TEST_F(FormatTest, strip) {
+  EXPECT_EQ("a b c", strutil::strip(" a b c "));
+  EXPECT_EQ("a b c", strutil::strip("a b c "));
+  EXPECT_EQ("a b c", strutil::strip(" a b c"));
+  EXPECT_EQ("", strutil::strip(""));
+  EXPECT_EQ("", strutil::strip(" "));
+  EXPECT_EQ("", strutil::strip("  "));
+
+  EXPECT_EQ("hello", strutil::strip("\thello\n"));
+}
+
+TEST_F(FormatTest, rstrip) {
+  EXPECT_EQ(" a b c", strutil::rstrip(" a b c "));
+  EXPECT_EQ("a b c", strutil::rstrip("a b c "));
+  EXPECT_EQ(" a b c", strutil::rstrip(" a b c"));
+  EXPECT_EQ("", strutil::rstrip(""));
+  EXPECT_EQ("", strutil::rstrip(" "));
+  EXPECT_EQ("", strutil::rstrip("  "));
+}
+
+TEST_F(FormatTest, lstrip) {
+  EXPECT_EQ("a b c ", strutil::lstrip(" a b c "));
+  EXPECT_EQ("a b c ", strutil::lstrip("a b c "));
+  EXPECT_EQ("a b c", strutil::lstrip(" a b c"));
+  EXPECT_EQ("", strutil::lstrip(""));
+  EXPECT_EQ("", strutil::lstrip(" "));
+  EXPECT_EQ("", strutil::lstrip("  "));
+}

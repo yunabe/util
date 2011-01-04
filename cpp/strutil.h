@@ -60,6 +60,46 @@ static string JoinString(const string& combinator, const vector<string>& list) {
   }
   return result;
 }
+
+inline bool __is_whitespace(char c) {
+  return c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f';
+}
+
+static string strip(const string& s) {
+  size_t start, end;
+  for (start = 0; start < s.length(); ++start) {
+    if (!__is_whitespace(s[start])) {
+      break;
+    }
+  }
+  for (end = s.length() - 1; end > start; --end) {
+    if (!__is_whitespace(s[end])) {
+      break;
+    }
+  }
+  return s.substr(start, end + 1 - start);
+}
+
+static string lstrip(const string& s) {
+  size_t start;
+  for (start = 0; start < s.length(); ++start) {
+    if (!__is_whitespace(s[start])) {
+      break;
+    }
+  }
+  return s.substr(start, s.length() - start);
+}
+
+static string rstrip(const string& s) {
+  int end; // Note that we can not use size_t here because end can be negative.
+  for (end = s.length() - 1; end >= 0; --end) {
+    if (!__is_whitespace(s[end])) {
+      break;
+    }
+  }
+  return s.substr(0, end + 1);
+}
+ 
 }
 
 #endif  // YUNABE_UTIL_CPP_STRUTIL_H_
