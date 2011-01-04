@@ -4,10 +4,30 @@
 #include <string>
 #include <vector>
 
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+
 using std::string;
 using std::vector;
 
 namespace strutil {
+
+static string Format(const char* fmt, ...) {
+  va_list args;
+  char* buffer = NULL;
+  va_start(args, fmt);
+  int rc = vasprintf(&buffer, fmt, args);
+  va_end(args);
+  string result;
+  if (rc >= 0) {
+    result = buffer;
+  }
+  if (buffer != NULL) {
+    free(buffer);
+  }
+  return result;
+}
 
 static void SplitString(const string& s, char sep, vector<string>* result) {
   size_t seek_pos = 0;

@@ -61,3 +61,13 @@ TEST_F(JoinStringTest, JoinString) {
   list.push_back("c");
   EXPECT_EQ("a/b/c", strutil::JoinString("/", list));
 }
+
+class FormatTest : public testing::Test {
+};
+
+TEST_F(FormatTest, Format) {
+  EXPECT_EQ("2011/01/04",
+            strutil::Format("%d/%02d/%02d", 2011, 1, 4));
+  EXPECT_EQ("Hello world",
+            strutil::Format("Hello %s", "world"));
+}
