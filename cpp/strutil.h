@@ -13,7 +13,7 @@ using std::vector;
 
 namespace strutil {
 
-static string Format(const char* fmt, ...) {
+static string format(const char* fmt, ...) {
   va_list args;
   char* buffer = NULL;
   va_start(args, fmt);
@@ -29,7 +29,7 @@ static string Format(const char* fmt, ...) {
   return result;
 }
 
-static void SplitString(const string& s, char sep, vector<string>* result) {
+static void split(const string& s, char sep, vector<string>* result) {
   size_t seek_pos = 0;
   while (seek_pos < s.size() + 1) {
     size_t sep_pos = s.find_first_of(sep, seek_pos);
@@ -41,7 +41,7 @@ static void SplitString(const string& s, char sep, vector<string>* result) {
   }
 }
 
-static string JoinString(const string& combinator, const vector<string>& list) {
+static string join(const string& combinator, const vector<string>& list) {
   if (list.size() == 0) {
     return "";
   }

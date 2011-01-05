@@ -79,7 +79,7 @@ string os::path::normpath(const string& path) {
     initial_slashes = 2;
   }
   vector<string> comps;
-  strutil::SplitString(path, '/', &comps);
+  strutil::split(path, '/', &comps);
   vector<string> new_comps;
   for (int i = 0; i < comps.size(); ++i) {
     const string& comp = comps[i];
@@ -95,7 +95,7 @@ string os::path::normpath(const string& path) {
       new_comps.pop_back();
     }
   }
-  string joined = strutil::JoinString("/", new_comps);
+  string joined = strutil::join("/", new_comps);
   switch (initial_slashes) {
   case 1:
     return "/" + joined;
