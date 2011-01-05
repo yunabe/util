@@ -33,6 +33,6 @@ namespace os {
 
     string dirname(const string& path);
   }
-}
+}  // namespace os
 
 #endif  // YUNABE_UTIL_CPP_OS_H_

@@ -99,7 +99,5 @@ static string rstrip(const string& s) {
   }
   return s.substr(0, end + 1);
 }
- 
-}
-
+}  // namespace strutil
 #endif  // YUNABE_UTIL_CPP_STRUTIL_H_
