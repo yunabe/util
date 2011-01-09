@@ -99,5 +99,18 @@ static string rstrip(const string& s) {
   }
   return s.substr(0, end + 1);
 }
+
+inline string trim(const string& s) {
+  return strip(s);
+}
+
+inline string ltrim(const string& s) {
+  return lstrip(s);
+}
+
+inline string rtrim(const string& s) {
+  return rstrip(s);
+}
+
 }  // namespace strutil
 #endif  // YUNABE_UTIL_CPP_STRUTIL_H_
