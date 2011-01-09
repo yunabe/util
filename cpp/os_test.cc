@@ -12,6 +12,7 @@ TEST_F(OsTest, GetCwd) {
   chdir(cwd.c_str());
 }
 
+// TODO: Add unit test for fork, wait, exit, _exit.
 // TODO: Add unit test for os::rmdir and os::listdir.
 
 class OsPathTest : public testing::Test {

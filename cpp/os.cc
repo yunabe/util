@@ -3,8 +3,10 @@
 #include <dirent.h>  // opendir
 #include <limits.h>  // PATH_MAX
 #include <unistd.h>  // getcwd
+#include <stdlib.h> // exit
 #include <string.h>  // strcmp
-#include <sys/types.h>  // opendir
+#include <sys/types.h>  // opendir, wait
+#include <sys/wait.h>  // wait
 
 #include "strutil.h"
 
@@ -16,6 +18,22 @@ string os::getcwd() {
   char cwd[PATH_MAX];
   ::getcwd(cwd, PATH_MAX);
   return string(cwd);
+}
+
+pid_t os::fork() {
+  return ::fork();
+}
+
+pid_t os::wait(int* status) {
+  return ::wait(status);
+}
+
+void os::exit(int status) {
+  ::exit(status);
+}
+
+void os::_exit(int status) {
+  ::_exit(status);
 }
 
 int os::rmdir(const string& path) {

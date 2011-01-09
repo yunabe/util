@@ -6,11 +6,22 @@
 #include <string>
 #include <vector>
 
+#include <unistd.h> // pid_t
+
 using std::string;
 using std::vector;
 
 namespace os {
   string getcwd();
+
+  pid_t fork();
+
+  pid_t wait(int* status);
+
+
+  void exit(int status);
+
+  void _exit(int status);
 
   int rmdir(const string& path);
 
