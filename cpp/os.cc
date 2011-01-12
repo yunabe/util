@@ -8,10 +8,13 @@
 #include <sys/types.h>  // opendir, wait
 #include <sys/wait.h>  // wait
 
+#include <map>
+
 #include "strutil.h"
 
-static const char* kCurrentDirectory = ".";
+using std::map;
 
+static const char* kCurrentDirectory = ".";
 static const char* kParentDirectory = "..";
 
 string os::getcwd() {
@@ -82,6 +85,56 @@ string os::path::join(const string& a, const string& b) {
   paths.push_back(a);
   paths.push_back(b);
   return os::path::join(paths);
+}
+
+namespace {
+  class EnvironManager {
+  public:
+    EnvironManager() {
+      char** env = environ;
+      while (*env != NULL) {
+        string name_value = *env;
+        ++env;
+        size_t pos = name_value.find('=');
+        if (pos == string::npos) {
+          // Error, just ignore.
+          continue;
+        }
+        string name = name_value.substr(0, pos);
+        string value = name_value.substr(pos + 1);
+        env_[name] = value;
+      }
+    }
+
+    map<string, string> env_;
+  };
+
+  EnvironManager environ_manager;
+}
+
+const string& os::environ(const string& name,
+                          const string& default_value) {
+  map<string, string>::const_iterator iter = environ_manager.env_.find(name);
+  if (iter != environ_manager.env_.end()) {
+    return iter->second;
+  } else {
+    return default_value;
+  }
+}
+
+const string& os::environ(const string& name) {
+  static const string empty;
+  return os::environ(name, empty);
+}
+
+void os::set_environ(const string& name, const string& value) {
+  environ_manager.env_[name] = value;
+  setenv(name.c_str(), value.c_str(), 1);
+}
+
+void os::clear_environ(const string& name) {
+  environ_manager.env_.erase(name);
+  unsetenv(name.c_str());
 }
 
 string os::path::normpath(const string& path) {

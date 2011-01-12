@@ -12,6 +12,28 @@ TEST_F(OsTest, GetCwd) {
   chdir(cwd.c_str());
 }
 
+TEST_F(OsTest, Environ) {
+  // TODO: Writes unit tests which is independent of USER environment variable.
+  string username = getlogin();
+  EXPECT_EQ(username, os::environ("USER"));
+  EXPECT_EQ("", os::environ("=invalid="));
+  EXPECT_EQ(username, os::environ("USER", "default"));
+  EXPECT_EQ("default", os::environ("=invalid=", "default"));
+}
+
+TEST_F(OsTest, SetEnviron) {
+  // TODO: Checks set_environ really affects environ variables.
+  os::set_environ("YUNABE_OS_TEST", "foo");
+  EXPECT_EQ("foo", os::environ("YUNABE_OS_TEST"));
+}
+
+TEST_F(OsTest, ClearEnviron) {
+  // TODO: Checks clear_environ really affects environ variables.
+  os::set_environ("YUNABE_OS_TEST", "foo");
+  os::clear_environ("YUNABE_OS_TEST");
+  EXPECT_EQ("", os::environ("YUNABE_OS_TEST"));
+}
+
 // TODO: Add unit test for fork, wait, exit, _exit.
 // TODO: Add unit test for os::rmdir and os::listdir.
 

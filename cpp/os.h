@@ -18,7 +18,6 @@ namespace os {
 
   pid_t wait(int* status);
 
-
   void exit(int status);
 
   void _exit(int status);
@@ -26,6 +25,15 @@ namespace os {
   int rmdir(const string& path);
 
   bool listdir(const string& path, vector<string>* children);
+
+  const string& environ(const string& name);
+
+  const string& environ(const string& name,
+                        const string& default_value);
+
+  void set_environ(const string& name, const string& value);
+
+  void clear_environ(const string& name);
 
   namespace path {
     string abspath(const string& path);
